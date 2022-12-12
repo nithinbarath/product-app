@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  backend_django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - envs/dev.env
+    links:
+      - "mysqlDB:db"
+    environment:
+      DB_HOST: mysqlDB
+      DB_PORT: 3306
+
+    depends_on:
+      - mysqlDB
+
+  queue:
+    image: 'rabbitmq:3.6-management-alpine'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - AMQP:'amqps://cbfwwtrw:AiIgxiQ3RDuevDyU2paTX457_tk0gDE_@puffin.rmq2.cloudamqp.com/cbfwwtrw'
+      - RABBITMQ_DEFAULT_USER:'quest'
+      - RABBITMQ_DEFAULT_PASSWORD:'quest'
+    
+
+    # depends_on:
+    #   - mysqlDB
+
+  mysqlDB:
+    image: mysql:5.7.22
+    restart: always
+
+    env_file:
+      - envs/dev.env
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33066:3306
+
+  
+  # postgresDB:
+  #   image: postgres:14-alpine
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
+  #   env_file:
+  #     - envs/dev.env
+
+# volumes:
+#   postgres_data:
+#   data01:
+#     driver: local
