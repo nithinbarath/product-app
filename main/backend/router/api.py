@@ -1,12 +1,14 @@
+from os import environ
 import logging
 from flask import Flask
-
+from flask_cors import CORS
 from endpoint.flask_test import simple_page
 logger = logging.getLogger(__name__)
 
 
 app = Flask(__name__)
-
+app.config["SQLALCHEMY_DATABASE_URI"] = environ['DB_URI']
+# CORS(app)
 app.register_blueprint(simple_page)
 
 origins= [

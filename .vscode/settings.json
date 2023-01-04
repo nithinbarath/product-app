@@ -1,0 +1,27 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "database",
+            "database": "database",
+            "username": "developer",
+            "password": "developer"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33066,
+            "driver": "MySQL",
+            "name": "database",
+            "database": "database",
+            "username": "developer",
+            "password": "developer"
+        }
+    ]
+}
